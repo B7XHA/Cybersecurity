@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل الأمن السيبراني | CyberSec Tools</title>
+<meta name="description" content="تعلم أشهر أدوات وتقنيات الأمن السيبراني وحماية البيانات من خلال مقالات تقنية متجددة.">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{ --bg:#0d1117; --card:#161b22; --text:#c9d1d9; --main:#58a6ff; --accent:#238636; }
+body.light{ --bg:#f0f2f5; --card:#ffffff; --text:#1f2328; --main:#0969da; }
+
+body{ margin:0; padding:15px; font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); max-width:700px; margin:auto; transition: 0.3s; }
+h1{ text-align:center; color:var(--main); border-bottom: 2px solid var(--main); padding-bottom: 10px; }
+h2{ text-align:right; color:var(--accent); margin-top: 30px; border-right: 4px solid var(--accent); padding-right: 10px; }
+p{ line-height:1.8; margin:15px 0; text-align:right; font-size: 17px; }
+
+/* تنسيق الصور */
+.post-img { width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #30363d; }
+
+/* تنسيق الأكواد البرمجية (إذا وجدت) */
+code { font-family: 'Fira Code', monospace; background: #21262d; padding: 2px 6px; border-radius: 4px; color: #ff7b72; direction: ltr; display: inline-block; }
+
+.ad{ margin:20px 0; text-align:center; min-height: 90px; background: rgba(255,255,255,0.02); border-radius: 8px; }
+.toggle{ position:fixed; top:15px; left:15px; background:var(--main); color:#fff; padding:10px; border-radius:50%; cursor:pointer; z-index:9999; width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+
+<body class="dark">
+
+<div class="toggle" onclick="toggleTheme()">🌓</div>
+<div id="content"></div>
+
+<script>
+const file = new URLSearchParams(location.search).get("file");
+
+fetch(file)
+.then(r => r.text())
+.then(data => {
+  let lines = data.split("\n");
+  let div = document.getElementById("content");
+
+  lines.forEach(line => {
+    line = line.trim();
+    if (line === "") return;
+
+    // معالجة الصور (img) رابط (img)
+    if (line.includes("(img)")) {
+      let imgSrc = line.replace(/\(img\)/g, "").trim();
+      let img = document.createElement("img");
+      img.src = imgSrc;
+      img.className = "post-img";
+      div.appendChild(img);
+    } 
+    // العنوان الرئيسي ***
+    else if (line.startsWith("***")) {
+      let h1 = document.createElement("h1");
+      h1.textContent = line.replace(/\*/g, "");
+      div.appendChild(h1);
+    } 
+    // العنوان الفرعي ** (يظهر فوقه إعلان)
+    else if (line.startsWith("**")) {
+      let adDiv = document.createElement("div");
+      adDiv.className = "ad";
+      adDiv.innerHTML = `
+        <script type="text/javascript">
+          atOptions = { 'key':'dcff8a2cffdf0642c627a5bacf3a04fd', 'format':'iframe', 'height':60, 'width':320 };
+        <\/script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+      `;
+      div.appendChild(adDiv);
+
+      let h2 = document.createElement("h2");
+      h2.textContent = line.replace(/\*/g, "");
+      div.appendChild(h2);
+    } 
+    // الفقرة العادية
+    else {
+      let p = document.createElement("p");
+      p.textContent = line;
+      div.appendChild(p);
+    }
+  });
+});
+
+function toggleTheme(){
+  document.body.classList.toggle("light");
+  localStorage.setItem("sec-theme", document.body.classList.contains("light"));
+}
+if(localStorage.getItem("sec-theme") === "true") document.body.classList.add("light");
+</script>
+
+<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:30px 0;">
+  <div class="ad">
+    <script type="text/javascript">
+      atOptions = { 'key':'0b7539a5227dc7b69da2ea94b0521ab6', 'format':'iframe', 'height':250, 'width':300 };
+    </script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+  </div>
+</div>
+
+<script>
+document.body.addEventListener("click", function(){
+  window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
+}, {once:true});
+</script>
+
+</body>
+</html>
