@@ -4,58 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Report View</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{ margin:0; padding:15px; font-family:'Cairo',sans-serif; background:#050505; color:#00ff41; line-height:1.8; }
+body{ margin:0; padding:15px; font-family:'Cairo',sans-serif; background:#050505; color:#ccc; line-height:1.8; }
 .content{ max-width:700px; margin:auto; background:#0d0d0d; padding:20px; border-radius:10px; border:1px solid #1a1a1a; }
-h1{ color:#00ff41; text-align:center; font-family:'Fira Code', monospace; border-bottom:1px solid var(--sub); }
-h2{ color:#008f11; font-size:1.2rem; }
-p{ margin:15px 0; font-size:1rem; color:#ccc; }
-.article-img { width:100%; border-radius:8px; border:1px solid #00ff41; margin:20px 0; box-shadow: 0 0 10px #008f11; }
+h1 { color:#00ff41; text-align:center; font-family:'Fira Code', monospace !important; border-bottom:1px solid #008f11; padding-bottom:10px; }
+h2 { color:#00ff41; font-family:'Fira Code', monospace !important; font-size:1.2rem; margin-top:25px; }
+p { margin:15px 0; font-size:1.1rem; }
+.article-img { width:100%; border-radius:8px; border:1px solid #00ff41; margin:20px 0; }
 .back-btn { color:#00ff41; text-decoration:none; display:block; margin-bottom:15px; font-family:'Fira Code'; }
+.ad-box { margin: 20px 0; text-align: center; }
 </style>
 </head>
 <body>
-
 <div class="content">
-  <a href="index.html" class="back-btn">< [BACK_TO_TERMINAL]</a>
-  <div id="output"></div>
+    <a href="index.html" class="back-btn">< [BACK_TO_TERMINAL]</a>
+    <div id="output"></div>
 </div>
 
 <script>
 const file = new URLSearchParams(location.search).get("file");
+const adLink = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
 const output = document.getElementById("output");
 
-fetch("Articles/" + file)
-.then(r => r.text())
-.then(data => {
-  let lines = data.split("\n");
-  lines.forEach(line => {
-    line = line.trim();
-    if(!line) return;
+// إعلانات النقل
+document.body.addEventListener("click", () => { window.open(adLink, '_blank'); }, {once: true});
+setInterval(() => { window.open(adLink, '_blank'); }, 30000);
 
-    if(line.includes("(img)")){
-      let url = line.replace(/\(img\)/g, "");
-      let img = document.createElement("img");
-      img.src = url;
-      img.className = "article-img";
-      output.appendChild(img);
-    } else if(line.startsWith("***")){
-      let h1 = document.createElement("h1");
-      h1.textContent = line.replace(/\*/g,"");
-      output.appendChild(h1);
-    } else if(line.startsWith("**")){
-      let h2 = document.createElement("h2");
-      h2.textContent = line.replace(/\*/g,"");
-      output.appendChild(h2);
-    } else {
-      let p = document.createElement("p");
-      p.textContent = line;
-      output.appendChild(p);
-    }
-  });
+fetch("Articles/" + file).then(r => r.text()).then(data => {
+    let lines = data.split("\n");
+    lines.forEach((line, index) => {
+        line = line.trim(); if(!line) return;
+
+        let el;
+        if(line.includes("(img)")) {
+            el = document.createElement("img"); el.src = line.replace(/\(img\)/g, ""); el.className = "article-img";
+        } else if(line.startsWith("***")) {
+            el = document.createElement("h1"); el.textContent = line.replace(/\*/g,"");
+        } else if(line.startsWith("**")) {
+            el = document.createElement("h2"); el.textContent = line.replace(/\*/g,"");
+        } else {
+            el = document.createElement("p"); el.textContent = line;
+        }
+        output.appendChild(el);
+
+        // إعلان بين الفقرات (كل 5 أسطر مثلاً)
+        if(index > 0 && index % 5 === 0) {
+            let ad = document.createElement("div"); ad.className="ad-box";
+            ad.innerHTML = `<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':320};<\/script><script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
+            output.appendChild(ad);
+        }
+    });
 });
 </script>
 </body>
 </html>
-
