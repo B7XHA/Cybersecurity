@@ -4,21 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Report View</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{ margin:0; padding:15px; font-family:'Cairo',sans-serif; background:#050505; color:#ccc; line-height:1.8; }
+/* توحيد الخط لكل الموقع */
+*{ font-family: 'Cairo', sans-serif !important; }
+
+body{ margin:0; padding:15px; background:#050505; color:#ccc; line-height:1.8; }
 .content{ max-width:700px; margin:auto; background:#0d0d0d; padding:20px; border-radius:10px; border:1px solid #1a1a1a; }
-h1 { color:#00ff41; text-align:center; font-family:'Fira Code', monospace !important; border-bottom:1px solid #008f11; padding-bottom:10px; }
-h2 { color:#00ff41; font-family:'Fira Code', monospace !important; font-size:1.2rem; margin-top:25px; }
-p { margin:15px 0; font-size:1.1rem; }
+h1 { color:#00ff41; text-align:center; border-bottom:1px solid #008f11; padding-bottom:10px; font-weight: 700; }
+h2 { color:#00ff41; font-size:1.2rem; margin-top:25px; font-weight: 700; }
+p { margin:15px 0; font-size:1.1rem; text-align: justify; }
 .article-img { width:100%; border-radius:8px; border:1px solid #00ff41; margin:20px 0; }
-.back-btn { color:#00ff41; text-decoration:none; display:block; margin-bottom:15px; font-family:'Fira Code'; }
-.ad-box { margin: 20px 0; text-align: center; }
+.back-btn { color:#00ff41; text-decoration:none; display:block; margin-bottom:15px; font-weight: 700; }
+.ad-container { margin: 25px 0; text-align: center; background: #000; padding: 10px; border: 1px dashed #333; }
 </style>
 </head>
 <body>
 <div class="content">
-    <a href="index.html" class="back-btn">< [BACK_TO_TERMINAL]</a>
+    <a href="index.html" class="back-btn">< العودة للقاعدة الرئيسيـة</a>
     <div id="output"></div>
 </div>
 
@@ -27,32 +30,48 @@ const file = new URLSearchParams(location.search).get("file");
 const adLink = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
 const output = document.getElementById("output");
 
-// إعلانات النقل
-document.body.addEventListener("click", () => { window.open(adLink, '_blank'); }, {once: true});
+// إعلانات النقل التلقائي كل 30 ثانية
 setInterval(() => { window.open(adLink, '_blank'); }, 30000);
 
 fetch("Articles/" + file).then(r => r.text()).then(data => {
     let lines = data.split("\n");
-    lines.forEach((line, index) => {
+    let paragraphCount = 0;
+
+    lines.forEach((line) => {
         line = line.trim(); if(!line) return;
 
         let el;
         if(line.includes("(img)")) {
-            el = document.createElement("img"); el.src = line.replace(/\(img\)/g, ""); el.className = "article-img";
+            el = document.createElement("img"); 
+            el.src = line.replace(/\(img\)/g, ""); 
+            el.className = "article-img";
+            output.appendChild(el);
         } else if(line.startsWith("***")) {
-            el = document.createElement("h1"); el.textContent = line.replace(/\*/g,"");
+            el = document.createElement("h1"); 
+            el.textContent = line.replace(/\*/g,"");
+            output.appendChild(el);
         } else if(line.startsWith("**")) {
-            el = document.createElement("h2"); el.textContent = line.replace(/\*/g,"");
+            el = document.createElement("h2"); 
+            el.textContent = line.replace(/\*/g,"");
+            output.appendChild(el);
         } else {
-            el = document.createElement("p"); el.textContent = line;
-        }
-        output.appendChild(el);
+            el = document.createElement("p"); 
+            el.textContent = line;
+            output.appendChild(el);
+            paragraphCount++;
 
-        // إعلان بين الفقرات (كل 5 أسطر مثلاً)
-        if(index > 0 && index % 5 === 0) {
-            let ad = document.createElement("div"); ad.className="ad-box";
-            ad.innerHTML = `<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':320};<\/script><script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
-            output.appendChild(ad);
+            // إضافة إعلان بعد كل 3 فقرات (نصوص) لزيادة الأرباح
+            if(paragraphCount % 3 === 0) {
+                let adBox = document.createElement("div");
+                adBox.className = "ad-container";
+                adBox.innerHTML = `
+                    <script type="text/javascript">
+                        atOptions = { 'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd', 'format' : 'iframe', 'height' : 60, 'width' : 320 };
+                    <\/script>
+                    <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+                `;
+                output.appendChild(adBox);
+            }
         }
     });
 });
