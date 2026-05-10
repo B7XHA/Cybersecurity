@@ -3,78 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Report View</title>
+<title>CyberShield | Report View</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* توحيد الخط لكل الموقع */
-*{ font-family: 'Cairo', sans-serif !important; }
+/* توحيد الخط لكل عناصر الموقع */
+* { font-family: 'Cairo', sans-serif !important; }
 
-body{ margin:0; padding:15px; background:#050505; color:#ccc; line-height:1.8; }
-.content{ max-width:700px; margin:auto; background:#0d0d0d; padding:20px; border-radius:10px; border:1px solid #1a1a1a; }
-h1 { color:#00ff41; text-align:center; border-bottom:1px solid #008f11; padding-bottom:10px; font-weight: 700; }
-h2 { color:#00ff41; font-size:1.2rem; margin-top:25px; font-weight: 700; }
-p { margin:15px 0; font-size:1.1rem; text-align: justify; }
-.article-img { width:100%; border-radius:8px; border:1px solid #00ff41; margin:20px 0; }
-.back-btn { color:#00ff41; text-decoration:none; display:block; margin-bottom:15px; font-weight: 700; }
-.ad-container { margin: 25px 0; text-align: center; background: #000; padding: 10px; border: 1px dashed #333; }
+:root {
+  --bg: #050505;
+  --card: #0d0d0d;
+  --text: #e0e0e0;
+  --main: #00ff41; /* أخضر سيبراني */
+  --sub: #008f11;
+}
+
+body {
+  margin: 0;
+  padding: 15px;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.content-box {
+  max-width: 800px;
+  margin: auto;
+  background: var(--card);
+  padding: 25px;
+  border: 1px solid #1a1a1a;
+  border-radius: 10px;
+}
+
+/* تنسيق العناوين بنفس الخط الموحد */
+h1 { color: var(--main); text-align: center; border-bottom: 2px solid var(--sub); padding-bottom: 10px; margin-bottom: 20px; }
+h2 { color: var(--main); font-size: 1.3rem; margin-top: 30px; border-right: 4px solid var(--main); padding-right: 10px; }
+
+p { margin: 15px 0; font-size: 1.1rem; text-align: justify; color: #ccc; }
+
+.article-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 25px auto;
+  border-radius: 8px;
+  border: 2px solid var(--main);
+  box-shadow: 0 0 15px rgba(0,255,65,0.2);
+}
+
+.back-btn {
+  display: inline-block;
+  color: var(--main);
+  text-decoration: none;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* تنسيق الإعلانات بين الفقرات */
+.ad {
+  margin: 25px auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
 </style>
 </head>
 <body>
-<div class="content">
-    <a href="index.html" class="back-btn">< العودة للقاعدة الرئيسيـة</a>
-    <div id="output"></div>
+
+<div class="content-box">
+  <a href="index.html" class="back-btn">< [العودة للقاعدة الرئيسية]</a>
+  <div id="output"></div>
 </div>
 
 <script>
 const file = new URLSearchParams(location.search).get("file");
+const folder = "Articles/";
 const adLink = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
 const output = document.getElementById("output");
 
 // إعلانات النقل التلقائي كل 30 ثانية
 setInterval(() => { window.open(adLink, '_blank'); }, 30000);
 
-fetch("Articles/" + file).then(r => r.text()).then(data => {
-    let lines = data.split("\n");
-    let paragraphCount = 0;
+// إعلان عند أول ضغطة
+document.body.addEventListener("click", () => {
+    window.open(adLink, '_blank');
+}, {once: true});
 
-    lines.forEach((line) => {
-        line = line.trim(); if(!line) return;
+fetch(folder + file)
+.then(r => r.text())
+.then(data => {
+  let lines = data.split("\n");
+  
+  lines.forEach((line, index) => {
+    line = line.trim();
+    if(!line) return;
 
-        let el;
-        if(line.includes("(img)")) {
-            el = document.createElement("img"); 
-            el.src = line.replace(/\(img\)/g, ""); 
-            el.className = "article-img";
-            output.appendChild(el);
-        } else if(line.startsWith("***")) {
-            el = document.createElement("h1"); 
-            el.textContent = line.replace(/\*/g,"");
-            output.appendChild(el);
-        } else if(line.startsWith("**")) {
-            el = document.createElement("h2"); 
-            el.textContent = line.replace(/\*/g,"");
-            output.appendChild(el);
-        } else {
-            el = document.createElement("p"); 
-            el.textContent = line;
-            output.appendChild(el);
-            paragraphCount++;
+    let el;
+    // معالجة الصور
+    if(line.includes("(img)")){
+      let imgUrl = line.replace(/\(img\)/g, "").trim();
+      el = document.createElement("img");
+      el.src = imgUrl;
+      el.className = "article-img";
+      output.appendChild(el);
+    }
+    // معالجة العناوين الرئيسية
+    else if(line.startsWith("***")){
+      el = document.createElement("h1");
+      el.textContent = line.replace(/\*/g,"");
+      output.appendChild(el);
+    }
+    // معالجة العناوين الفرعية
+    else if(line.startsWith("**")){
+      el = document.createElement("h2");
+      el.textContent = line.replace(/\*/g,"");
+      output.appendChild(el);
+    }
+    // النصوص العادية مع حقن الإعلانات
+    else {
+      el = document.createElement("p");
+      el.textContent = line;
+      output.appendChild(el);
 
-            // إضافة إعلان بعد كل 3 فقرات (نصوص) لزيادة الأرباح
-            if(paragraphCount % 3 === 0) {
-                let adBox = document.createElement("div");
-                adBox.className = "ad-container";
-                adBox.innerHTML = `
-                    <script type="text/javascript">
-                        atOptions = { 'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd', 'format' : 'iframe', 'height' : 60, 'width' : 320 };
-                    <\/script>
-                    <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
-                `;
-                output.appendChild(adBox);
-            }
-        }
-    });
+      // حقن الإعلان بعد الفقرات (كل 4 أسطر نصية) بناءً على الكود الذي أرسلته
+      if(index > 0 && index % 4 === 0) {
+          let adDiv = document.createElement("div");
+          adDiv.className = "ad";
+          // استخدام iframe لحقن إعلان بمساحة محددة كما في مثالك
+          adDiv.innerHTML = `<iframe src="about:blank" style="border:none; height:70px; width:100%; max-width:400px;" id="ad_frame_${index}"></iframe>`;
+          output.appendChild(adDiv);
+          
+          const doc = adDiv.querySelector('iframe').contentWindow.document;
+          doc.open();
+          doc.write(`<body style="margin:0; display:flex; justify-content:center; align-items:center; background:transparent;">
+            <script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':320};<\/script>
+            <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+          </body>`);
+          doc.close();
+      }
+    }
+  });
 });
 </script>
+
 </body>
 </html>
