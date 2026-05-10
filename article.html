@@ -46,7 +46,7 @@ p { margin: 15px 0; font-size: 1.1rem; text-align: justify; color: #ccc; }
   display: block;
   margin: 25px auto;
   border-radius: 8px;
-  border: 2px solid var(--main);
+  border: 0px solid var(--main);
   box-shadow: 0 0 15px rgba(0,255,65,0.2);
 }
 
@@ -126,7 +126,7 @@ fetch(folder + file)
       output.appendChild(el);
 
       // حقن الإعلان بعد الفقرات (كل 4 أسطر نصية) بناءً على الكود الذي أرسلته
-      if(index > 0 && index % 4 === 0) {
+      if(index > 0 && index % 7 === 0) {
           let adDiv = document.createElement("div");
           adDiv.className = "ad";
           // استخدام iframe لحقن إعلان بمساحة محددة كما في مثالك
