@@ -12,7 +12,7 @@
 
 *** ما هي أداة Nmap ؟ ***
 
-(img) https://nmap.org/images/screenshot.png (img)
+(img) https://upload.wikimedia.org/wikipedia/commons/7/77/Nmap-screenshot.png (img)
 
 ** شرح الأداة **
 
@@ -39,7 +39,7 @@
 
 *** أهمية أداة Nmap في الأمن السيبراني ***
 
-(img) https://nmap.org/images/zenmap.png (img)
+(img) https://miro.medium.com/v2/resize:fit:1200/1*L7r9DqfiV7u6M8L8Qj3D4Q.png (img)
 
 ** لماذا تعتبر الأداة مهمة ؟ **
 
@@ -60,7 +60,7 @@
 
 *** مميزات أداة Nmap ***
 
-(img) https://nmap.org/images/nmap-features.png (img)
+(img) https://www.stationx.net/wp-content/uploads/2022/09/Nmap-Cheat-Sheet.jpg (img)
 
 ** 1. فحص المنافذ المفتوحة **
 
@@ -111,7 +111,7 @@ nmap -sV 192.168.1.1
 
 *** شرح أمر nmap -sV ***
 
-(img) https://nmap.org/images/nmap-output.png (img)
+(img) https://www.cyberciti.biz/media/new/cms/2017/04/Nmap-command-examples.png (img)
 
 ** شرح الأمر بالتفصيل **
 
@@ -133,7 +133,7 @@ nmap -sV
 
 *** أنواع الفحص في Nmap ***
 
-(img) https://nmap.org/images/network-inventory.png (img)
+(img) https://www.comparitech.com/wp-content/uploads/2019/06/Nmap-port-scan-example.jpg (img)
 
 ** فحص TCP SYN **
 
@@ -174,7 +174,7 @@ nmap 192.168.1.0/24
 
 *** محرك السكربتات NSE ***
 
-(img) https://nmap.org/images/nse.png (img)
+(img) https://hackertarget.com/wp-content/uploads/2019/05/nmap-scripting-engine.png (img)
 
 ** ما هو NSE ؟ **
 
@@ -200,7 +200,7 @@ nmap --script vuln 192.168.1.1
 
 *** واجهة Zenmap الرسومية ***
 
-(img) https://nmap.org/images/zenmap-screenshot-laptop.png (img)
+(img) https://upload.wikimedia.org/wikipedia/commons/3/3f/Zenmap_ubuntu.png (img)
 
 ** واجهة رسومية للمبتدئين **
 
