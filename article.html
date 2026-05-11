@@ -40,6 +40,9 @@ h2 { color: var(--main); font-size: 1.3rem; margin-top: 30px; border-right: 4px 
 
 p { margin: 15px 0; font-size: 1.1rem; text-align: justify; color: #ccc; }
 
+/* تنسيق الروابط داخل الفقرات */
+p a { color: #00aaff; text-decoration: underline; }
+
 .article-img {
   max-width: 100%;
   height: auto;
@@ -71,7 +74,7 @@ p { margin: 15px 0; font-size: 1.1rem; text-align: justify; color: #ccc; }
 <body>
 
 <div class="content-box">
-  <a href="index.html" class="back-btn"><العودة للقاعدة الرئيسية</a>
+  <a href="index.html" class="back-btn">< العودة للقاعدة الرئيسية</a>
   <div id="output"></div>
 </div>
 
@@ -119,10 +122,12 @@ fetch(folder + file)
       el.textContent = line.replace(/\*/g,"");
       output.appendChild(el);
     }
-    // النصوص العادية مع حقن الإعلانات
+    // النصوص العادية مع حقن الإعلانات وتحويل الروابط
     else {
       el = document.createElement("p");
-      el.textContent = line;
+      // الكود التالي يبحث عن الروابط ويحولها لوسم a
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      el.innerHTML = line.replace(urlRegex, (url) => `<a href="${url}" target="_blank">${url}</a>`);
       output.appendChild(el);
 
       // حقن الإعلان بعد الفقرات (كل 4 أسطر نصية) بناءً على الكود الذي أرسلته
@@ -148,3 +153,4 @@ fetch(folder + file)
 
 </body>
 </html>
+
